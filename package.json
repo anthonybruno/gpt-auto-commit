@@ -1,0 +1,48 @@
+{
+  "name": "gpt-auto-commit",
+  "version": "1.0.0",
+  "description": "A cute little CLI tool to generate commit messages",
+  "type": "module",
+  "bin": {
+    "gpt-auto-commit": "./dist/cli.js",
+    "gpc": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "start": "node --no-deprecation ./dist/cli.js",
+    "dev": "tsc -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anthonybruno/gpt-auto-commit.git"
+  },
+  "keywords": [
+    "git",
+    "commit",
+    "gpt",
+    "chatgpt",
+    "cli",
+    "automation"
+  ],
+  "author": "Anthony Bruno",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/anthonybruno/gpt-auto-commit/issues"
+  },
+  "homepage": "https://github.com/anthonybruno/gpt-auto-commit#readme",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^13.1.0",
+    "dotenv": "^16.3.1",
+    "openai": "^4.87.3",
+    "ora": "^8.2.0",
+    "simple-git": "^3.21.0"
+  },
+  "devDependencies": {
+    "@types/commander": "^2.12.0",
+    "@types/node": "^22.13.10",
+    "@types/ora": "^3.1.0",
+    "typescript": "^5.8.2"
+  }
+}
