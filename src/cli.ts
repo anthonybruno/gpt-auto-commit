@@ -12,7 +12,8 @@ import { exec } from 'child_process';
 import { promisify } from 'util';
 
 import OpenAI from 'openai';
-import simpleGit, { SimpleGit, StatusResult } from 'simple-git';
+import { simpleGit } from 'simple-git';
+import type { SimpleGit, StatusResult } from 'simple-git';
 import chalk from 'chalk';
 import ora from 'ora';
 
@@ -44,7 +45,7 @@ interface ChatMessage {
 
 config();
 
-const git: SimpleGit = simpleGit();
+const git = simpleGit() as SimpleGit;
 
 // Constants
 /** Directory for storing configuration */
