@@ -184,7 +184,7 @@ async function generateCommitMessage(diff: string): Promise<string> {
       {
         role: 'system',
         content:
-          'Generate concise conventional commit messages. Single line only.',
+          'You are a helpful assistant that generates clear and concise git commit messages. Follow conventional commits format. Focus on the main changes and their purpose. Only return a single-line commit message with no additional details, bullet points, or descriptions.',
       },
       {
         role: 'user',
