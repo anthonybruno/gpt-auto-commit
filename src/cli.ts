@@ -18,14 +18,16 @@ import chalk from 'chalk';
 import ora from 'ora';
 
 // Type definitions
-/** Configuration object for storing API keys */
+/** Configuration object for storing API keys and model */
 interface Config {
   apiKey: string;
+  model: string;
 }
 
 /** Command line options for the CLI */
 interface CommandOptions {
   key?: string;
+  model?: string;
 }
 
 /** Valid key responses for interactive mode */
@@ -74,7 +76,7 @@ async function ensureConfig(): Promise<void> {
     } catch {
       await fs.writeFile(
         CONFIG_FILE,
-        JSON.stringify({ apiKey: '' } as Config, null, 2)
+        JSON.stringify({ apiKey: '', model: 'gpt-4o-mini' } as Config, null, 2)
       );
     }
   } catch (error) {
@@ -90,9 +92,14 @@ async function ensureConfig(): Promise<void> {
 async function getConfig(): Promise<Config> {
   try {
     const config = await fs.readFile(CONFIG_FILE, 'utf8');
-    return JSON.parse(config) as Config;
+    const parsedConfig = JSON.parse(config) as Config;
+    // Ensure model is set if it doesn't exist in old configs
+    if (!parsedConfig.model) {
+      parsedConfig.model = 'gpt-4o-mini';
+    }
+    return parsedConfig;
   } catch {
-    return { apiKey: '' };
+    return { apiKey: '', model: 'gpt-4o-mini' };
   }
 }
 
@@ -101,8 +108,21 @@ async function getConfig(): Promise<Config> {
  * @param {string} apiKey - The OpenAI API key to store
  */
 async function setApiKey(apiKey: string): Promise<void> {
-  await fs.writeFile(CONFIG_FILE, JSON.stringify({ apiKey }, null, 2));
+  const config = await getConfig();
+  config.apiKey = apiKey;
+  await fs.writeFile(CONFIG_FILE, JSON.stringify(config, null, 2));
   console.log(chalk.green('API key saved successfully!'));
+}
+
+/**
+ * Sets the OpenAI model in the configuration
+ * @param {string} model - The OpenAI model to use
+ */
+async function setModel(model: string): Promise<void> {
+  const config = await getConfig();
+  config.model = model;
+  await fs.writeFile(CONFIG_FILE, JSON.stringify(config, null, 2));
+  console.log(chalk.green(`Model set to: ${model}`));
 }
 
 /**
@@ -194,7 +214,7 @@ async function generateCommitMessage(diff: string): Promise<string> {
     ];
 
     const response = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
+      model: config.model,
       messages,
       max_tokens: 100,
     });
@@ -368,14 +388,23 @@ program
   .command('config')
   .description('Configure the CLI tool')
   .option('-k, --key <key>', 'Set OpenAI API key')
+  .option(
+    '-m, --model <model>',
+    'Set OpenAI model (e.g., gpt-5-mini, gpt-5-nano, gpt-4o-mini, etc)'
+  )
   .action(async (options: CommandOptions) => {
     await ensureConfig();
     if (options.key) {
       await setApiKey(options.key);
-    } else {
+    }
+    if (options.model) {
+      await setModel(options.model);
+    }
+    if (!options.key && !options.model) {
       const config = await getConfig();
       console.log('Current configuration:');
       console.log('API Key:', config.apiKey ? '********' : 'Not set');
+      console.log('Model:', config.model);
     }
   });
 

@@ -1,6 +1,6 @@
 {
   "name": "gpt-auto-commit",
-  "version": "1.0.2",
+  "version": "1.2.0",
   "description": "A cute little CLI tool to generate commit messages",
   "type": "module",
   "bin": {

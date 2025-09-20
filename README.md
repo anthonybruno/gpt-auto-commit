@@ -1,10 +1,10 @@
-# ✌️ GPT Auto Commit
+# GPT Auto Commit
 
 ![GPT Auto Commit Screenshot](https://github.com/user-attachments/assets/919558a7-cc4e-4e47-804b-0be0e14cd722)
 
-A cute little CLI tool that uses OpenAI's GPT-4 to ✨automatically✨ generate commit messages.
+A cute little CLI tool that uses openai/gpt-5-mini to ✨automatically✨ generate commit messages.
 
-## ✨ Features
+## Features
 
 - One command, instant commit messages
 - Edit a message in interactive mode
@@ -13,13 +13,13 @@ A cute little CLI tool that uses OpenAI's GPT-4 to ✨automatically✨ generate 
 - Clean, colorful CLI for smooth workflow
 - Progress bars so you're never left hanging
 
-## 📦 Installation
+## Installation
 
 ```bash
 npm install -g gpt-auto-commit
 ```
 
-## 🔑 API Key & Pricing
+## API Key & Pricing
 
 This tool requires an OpenAI API key to function. Here's what you need to know:
 
@@ -28,10 +28,10 @@ This tool requires an OpenAI API key to function. Here's what you need to know:
 
 Also just a heads up that this _does_ cost money:
 
-- [gpt-4o-mini pricing](https://openai.com/pricing)
+- [gpt-4o-mini pricing](https://platform.openai.com/docs/pricing)
 - [Monitor your usage](https://platform.openai.com/usage)
 
-## 🛠️ Setup
+## Setup
 
 Before using the tool, you gotta configure your OpenAI API key:
 
@@ -41,7 +41,27 @@ gpt-auto-commit config --key YOUR_OPENAI_API_KEY
 gpc config --key YOUR_OPENAI_API_KEY
 ```
 
-## 🚀 Usage
+### Model Configuration
+
+You can also configure which OpenAI model to use. The default is `gpt-4o-mini` (cheapest option), but you can change it:
+
+```bash
+# Set a different model
+gpc config --model gpt-4o
+gpc config --model gpt-3.5-turbo
+
+# Set both API key and model at once
+gpc config --key YOUR_API_KEY --model gpt-4o
+
+# View current configuration
+gpc config
+```
+
+**Available models:**
+
+A list of models can be found [here](https://platform.openai.com/docs/pricing).
+
+## Usage
 
 ### Quick Commit (Recommended)
 
@@ -73,11 +93,13 @@ This will:
    - Press `e` to edit the message
    - Press `q` to quit without committing
 
-## 📝 Commands
+## Commands
 
 All commands can be used with either `gpt-auto-commit` or the shorthand `gpc`:
 
 - `gpc` - Quick generate and commit (default)
 - `gpc generate` - Interactive mode with edit options
 - `gpc config --key <key>` - Set your OpenAI API key
+- `gpc config --model <model>` - Set your OpenAI model
+- `gpc config` - View current configuration
 - `gpc --help` - Show help information
