@@ -1,6 +1,6 @@
 # ✌️ GPT Auto Commit
 
-![GPT Auto Commit Screenshot](https://abruno.net/gpc-screenshot.png)
+![GPT Auto Commit Screenshot](https://github.com/user-attachments/assets/919558a7-cc4e-4e47-804b-0be0e14cd722)
 
 A cute little CLI tool that uses OpenAI's GPT-4 to ✨automatically✨ generate commit messages.
 
